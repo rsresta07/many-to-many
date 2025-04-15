@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { StudentModule } from './student/student.module';
-import { SubjectsModule } from './subjects/subjects.module';
-import { StudentsModule } from './students/students.module';
+import { SubjectsModule } from './modules/subjects.module';
+import { StudentsModule } from './modules/students.module';
+import { Student } from './entities/student.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppDataSource } from './config/database.config';
 
 @Module({
-  imports: [StudentModule, SubjectsModule, StudentsModule],
+  imports: [
+    TypeOrmModule.forRoot(AppDataSource.options),
+    SubjectsModule,
+    StudentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
